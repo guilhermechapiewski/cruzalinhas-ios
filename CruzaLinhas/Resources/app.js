@@ -3,6 +3,14 @@ var win = Titanium.UI.createWindow({
     backgroundColor:'#fff'
 });
 
+var searchBar = Titanium.UI.createSearchBar({
+	showCancel: true,
+	height: 43,
+	top: 0,
+	hintText: '(ex.: Avenida Paulista, 900)'
+});
+win.add(searchBar);
+
 var annotation = Titanium.Map.createAnnotation({
 	latitude:42.334537,
 	longitude:-71.170101,
@@ -22,7 +30,8 @@ var mapview = Titanium.Map.createView({
 	animate:true,
 	regionFit:true,
 	userLocation:true,
-	annotations:[annotation]
+	annotations:[annotation],
+	top: 43
 });
 
 // read in our routes from a comma-separated file
@@ -57,14 +66,12 @@ mapview.addRoute(route);
 win.add(mapview);
 
 // when you click the logo, remove the route
-annotation.addEventListener('click',function()
-{
+annotation.addEventListener('click',function() {
 	mapview.removeRoute(route);
 });
 
 // map view click event listener
-mapview.addEventListener('click',function(evt)
-{
+mapview.addEventListener('click',function(evt) {
 	var clickSource = evt.clicksource;
 	Ti.API.info('mapview click clicksource = ' + clickSource)
 });
