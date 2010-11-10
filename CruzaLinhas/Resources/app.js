@@ -11,26 +11,22 @@ var searchBar = Titanium.UI.createSearchBar({
 });
 win.add(searchBar);
 
+var saopaulo = { latitude: -23.564655852575104, longitude: -46.651318073272705, latitudeDelta: 0.05, longitudeDelta: 0.05 };
+
 var annotation = Titanium.Map.createAnnotation({
-	latitude:42.334537,
-	longitude:-71.170101,
-	title:"Boston College",
-	subtitle:'Newton Campus, Chestnut Hill, MA',
-	animate:true
+	latitude: saopaulo.latitude,
+	longitude: saopaulo.longitude,
+	title: 'Av. Paulista, 900',
+	animate: true
 });
 
-var boston = {latitude:42.334537,longitude:-71.170101,latitudeDelta:0.010, longitudeDelta:0.018};
-
-//
-// CREATE MAP VIEW
-//
 var mapview = Titanium.Map.createView({
 	mapType: Titanium.Map.STANDARD_TYPE,
-	region: boston,
-	animate:true,
-	regionFit:true,
-	userLocation:true,
-	annotations:[annotation],
+	region: saopaulo,
+	animate: true,
+	regionFit: true,
+	userLocation: false,
+	annotations: [annotation],
 	top: 43
 });
 
@@ -64,16 +60,4 @@ var route = {
 mapview.addRoute(route);
 
 win.add(mapview);
-
-// when you click the logo, remove the route
-annotation.addEventListener('click',function() {
-	mapview.removeRoute(route);
-});
-
-// map view click event listener
-mapview.addEventListener('click',function(evt) {
-	var clickSource = evt.clicksource;
-	Ti.API.info('mapview click clicksource = ' + clickSource)
-});
-
 win.open();
