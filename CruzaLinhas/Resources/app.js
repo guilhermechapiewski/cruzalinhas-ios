@@ -20,20 +20,12 @@ var saopaulo = {
 	longitudeDelta: 0.05 
 };
 
-var annotation = Titanium.Map.createAnnotation({
-	latitude: saopaulo.latitude,
-	longitude: saopaulo.longitude,
-	title: 'Av. Paulista, 900',
-	animate: true
-});
-
 var mapView = Titanium.Map.createView({
 	mapType: Titanium.Map.STANDARD_TYPE,
 	region: saopaulo,
 	animate: true,
 	regionFit: true,
 	userLocation: false,
-	annotations: [annotation],
 	top: 43
 });
 
@@ -46,10 +38,47 @@ var mapView = Titanium.Map.createView({
 win.add(mapView);
 win.open();
 
-// loading.show();
-api.busLinesAt('-23.593999', '-46.673014', 8, function(busLines) {
-	for (var i=0; i<busLines.length; i++) {
-		api.addBusLineToMap(busLines[i], mapView);
-	}
-	// loading.hide();
+searchBar.addEventListener('cancel', function() {
+	searchBar.blur();
+});
+
+searchBar.addEventListener('return', function() {
+	// loading.show();
+	searchBar.blur();
+	var address = searchBar.value + ' - São Paulo - Brazil';
+	Ti.Geolocation.forwardGeocoder(address, function(data) {
+		if (!data.latitude || !data.longitude) {
+			Ti.UI.createAlertDialog({
+				title: 'Endereço não encontrado',
+				message: address
+			}).show();
+		} else {
+			Ti.API.info('mapView is visible? ' + mapView.visible);
+			Ti.API.info('address[' + address + '], latitude[' + data.latitude + '] and longitude[' + data.longitude + ']');
+			
+			mapView.removeAllAnnotations();
+			
+			mapView.setRegion({ 
+				latitude: data.latitude,
+				longitude: data.longitude,
+				latitudeDelta: 0.05, 
+				longitudeDelta: 0.05 
+			});
+			
+			api.busLinesAt(data.latitude, data.longitude, 8, function(busLines) {
+				// loading.hide();
+				for (var i=0; i<busLines.length; i++) {
+					api.addBusLineToMap(busLines[i], mapView);
+				}
+			});
+			
+			mapView.addAnnotation(Titanium.Map.createAnnotation({
+				latitude: data.latitude,
+				longitude: data.longitude,
+				title: address,
+				animate: true,
+				myid: 1
+			}));
+		}
+	});
 });
