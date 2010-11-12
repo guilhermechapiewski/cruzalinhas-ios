@@ -37,11 +37,19 @@ var mapView = Titanium.Map.createView({
 	top: 43
 });
 
+// var loading = Titanium.UI.createActivityIndicator({
+// 	style: Titanium.UI.iPhone.ActivityIndicatorStyle.BIG,
+// 	height: 50,
+// 	width: 10
+// });
+
+win.add(mapView);
+win.open();
+
+// loading.show();
 api.busLinesAt('-23.593999', '-46.673014', 8, function(busLines) {
 	for (var i=0; i<busLines.length; i++) {
 		api.addBusLineToMap(busLines[i], mapView);
 	}
+	// loading.hide();
 });
-
-win.add(mapView);
-win.open();
