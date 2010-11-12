@@ -19,7 +19,7 @@ api.busLinesAt = function(latitude, longitude, max, successCallback) {
 	
 	client.open('GET', 'http://cruzalinhas.appspot.com/linhasquepassam.json?lat=' + latitude + '&lng=' + longitude);
 	client.send();
-}
+};
 
 api.addBusLineToMap = function(busLine, mapView) {
 	var client = Ti.Network.createHTTPClient();
