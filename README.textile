@@ -1,7 +1,7 @@
-h1. CruzaLinhas para iPhone
+h1. CruzaLinhas para iOS
 
 O CruzaLinhas ("http://cruzalinhas.appspot.com":http://cruzalinhas.appspot.com) permite obter a lista completa das linhas de ônibus municipais que passam por um determinado lugar da cidade de São Paulo.
 
 A versão web foi desenvolvida pelo "Chester":http://chester.blog.br/sobre, e este aplicativo tem o objetivo de ajudar as pessoas a localizarem linhas de ônibus através do iPhone.
 
-Em breve (Dezembro/2010) o aplicativo estará disponível na AppStore para download (free).
+Em breve (Dezembro/2010) o aplicativo estará disponível gratuitamente para download na AppStore (inicialmente somente para iPhone e em seguida também para iPad).
